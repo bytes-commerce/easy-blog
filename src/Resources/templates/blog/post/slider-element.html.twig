@@ -1,0 +1,15 @@
+<div class="blog-slider-item mb-3">
+    <div class="card">
+        <div class="card-body">
+            {% if post.image %}
+                <img src="{{ asset('uploads/' ~ post.image) }}" alt="{{ post.name }}" class="img-fluid rounded mb-2">
+            {% endif %}
+            <h3 class="h6">
+                <a href="{{ path('blog.post', { slug: post.slug }) }}">{{ post.name }}</a>
+            </h3>
+            <p class="small text-muted mb-0">
+                {{ post.excerpt|default(post.content|striptags|slice(0, 100)) }}...
+            </p>
+        </div>
+    </div>
+</div>

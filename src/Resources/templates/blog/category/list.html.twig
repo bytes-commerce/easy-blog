@@ -1,0 +1,39 @@
+{% macro urlGen(page, category) %}
+    {% if category is null %}
+        {{ absolute_url(path('blog.category.all-posts', { page: page })) }}
+    {% else %}
+        {{ absolute_url(path('blog.category', { page: page, slug: category.slug })) }}
+    {% endif %}
+{% endmacro %}
+
+{% extends "@EasyBlog/blog/base.html.twig" %}
+
+{% block blog_title %}{{ category.name|default('All posts'|trans) }}{% endblock %}
+
+{% block blog_content %}
+    {% if category.description|default('') is not empty %}
+        <p class="lead">{{ category.description|raw }}</p>
+    {% endif %}
+
+    {% for post in posts %}
+        {% if loop.index > 1 %}<hr>{% endif %}
+        {% include '@EasyBlog/blog/post/card.html.twig' with { post: post } %}
+    {% else %}
+        <p class="text-muted">No posts found.</p>
+    {% endfor %}
+
+    {% if pages > 1 %}
+        {% include '@EasyBlog/blog/category/pagination.html.twig' with {
+            pages: pages,
+            currentPage: currentPage,
+            category: category
+        } %}
+    {% endif %}
+
+    {% if category.bottomDescription|default('') is not empty %}
+        <hr>
+        <div class="mt-4">
+            {{ category.bottomDescription|raw }}
+        </div>
+    {% endif %}
+{% endblock %}

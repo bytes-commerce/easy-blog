@@ -1,0 +1,39 @@
+{% macro urlGen(currentPage, category) %}
+    {% if category is null %}
+        {{ path('blog.category.all-posts', { page: currentPage }) }}
+    {% else %}
+        {{ path('blog.category', { page: currentPage, slug: category.slug }) }}
+    {% endif %}
+{% endmacro %}
+
+<nav aria-label="{{ category.name|default('All posts'|trans) }} Pagination">
+    <ul class="pagination justify-content-center">
+        {% if currentPage > 1 %}
+            <li class="page-item">
+                <a class="page-link" href="{{ _self.urlGen(currentPage - 1, category|default(null)) }}">Previous</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled"><span class="page-link">Previous</span></li>
+        {% endif %}
+
+        {% for page in 1..pages %}
+            {% if page == currentPage %}
+                <li class="page-item active" aria-current="page">
+                    <span class="page-link">{{ page }}</span>
+                </li>
+            {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ _self.urlGen(page, category|default(null)) }}">{{ page }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+
+        {% if currentPage < pages %}
+            <li class="page-item">
+                <a class="page-link" href="{{ _self.urlGen(currentPage + 1, category|default(null)) }}">Next</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled"><span class="page-link">Next</span></li>
+        {% endif %}
+    </ul>
+</nav>

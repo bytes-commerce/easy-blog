@@ -1,0 +1,7 @@
+<div class="blog-slider">
+    {% for post in posts %}
+        {% if loop.index <= 5 %}
+            {% include '@EasyBlog/blog/post/slider-element.html.twig' with { post: post } %}
+        {% endif %}
+    {% endfor %}
+</div>

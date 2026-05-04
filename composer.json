@@ -1,0 +1,67 @@
+{
+    "name": "bytes-commerce/easy-blog",
+    "description": "A drop-in blog bundle for Symfony with EasyAdmin support. Used for an easy kickstart for custom blogs in existing EasyAdmin projects.",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "authors": [
+        {
+            "name": "Maximilian Graf Schimmelmann",
+            "email": "office@bytes-commerce.de"
+        }
+    ],
+    "require": {
+        "php": ">=8.3",
+        "symfony/dependency-injection": "^7.0|^8.0",
+        "symfony/http-kernel": "^7.0|^8.0",
+        "symfony/config": "^7.0|^8.0",
+        "doctrine/orm": "^3.0",
+        "doctrine/doctrine-bundle": "^2.11",
+        "doctrine/doctrine-migrations-bundle": "^3.3",
+        "easycorp/easyadmin-bundle": "^5.0",
+        "vich/uploader-bundle": "^2.0",
+        "symfony/twig-bundle": "^7.0|^8.0",
+        "symfony/framework-bundle": "^7.0|^8.0",
+        "symfony/runtime": "^7.0|^8.0",
+        "symfony/cache": "^7.0|^8.0",
+        "twig/twig": "^3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.5|^11.0",
+        "symfony/phpunit-bridge": "^7.0|^8.0",
+        "phpstan/phpstan": "^1.12",
+        "symfony/var-dumper": "^7.0|^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "BytesCommerce\\EasyBlog\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "BytesCommerce\\EasyBlog\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/flex": true,
+            "symfony/runtime": true
+        },
+        "sort-packages": true
+    },
+    "extra": {
+        "symfony": {
+            "allow-contrib": false,
+            "require": "^7.0|^8.0"
+        }
+    },
+    "scripts": {
+        "test": [
+            "@php vendor/bin/phpunit"
+        ],
+        "analyse": [
+            "@php vendor/bin/phpstan analyse src/ --level=6"
+        ]
+    }
+}

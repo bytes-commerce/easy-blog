@@ -1,0 +1,43 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    BytesCommerce\EasyBlog\:
+        resource: '../../'
+        exclude:
+            - '../../DependencyInjection/'
+            - '../../Entity/'
+            - '../../Enum/'
+            - '../../EasyBlogBundle.php'
+
+    # Repository interface bindings
+    BytesCommerce\EasyBlog\Repository\PostRepositoryInterface:
+        alias: BytesCommerce\EasyBlog\Repository\PostRepository
+        public: true
+
+    BytesCommerce\EasyBlog\Repository\CategoryRepositoryInterface:
+        alias: BytesCommerce\EasyBlog\Repository\CategoryRepository
+        public: true
+
+    BytesCommerce\EasyBlog\Repository\FaqRepositoryInterface:
+        alias: BytesCommerce\EasyBlog\Repository\FaqRepository
+        public: true
+
+    # Controller registration with EasyAdmin
+    BytesCommerce\EasyBlog\Controller\Backend\PostCrudController:
+        tags: ['easyadmin.controller']
+
+    BytesCommerce\EasyBlog\Controller\Backend\CategoryCrudController:
+        tags: ['easyadmin.controller']
+
+    BytesCommerce\EasyBlog\Controller\Backend\FaqCrudController:
+        tags: ['easyadmin.controller']
+
+    # Blog frontend controller
+    BytesCommerce\EasyBlog\Controller\BlogController:
+        arguments:
+            $postRepository: '@BytesCommerce\EasyBlog\Repository\PostRepositoryInterface'
+            $categoryRepository: '@BytesCommerce\EasyBlog\Repository\CategoryRepositoryInterface'
+        tags: ['controller.service_arguments']

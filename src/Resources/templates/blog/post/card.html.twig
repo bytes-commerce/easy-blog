@@ -1,0 +1,32 @@
+<article class="card mb-4">
+    <div class="card-body">
+        {% if post.image %}
+            <div class="mb-3">
+                <img src="{{ asset('uploads/' ~ post.image) }}" alt="{{ post.name }}" class="img-fluid rounded">
+            </div>
+        {% endif %}
+
+        <div class="d-flex align-items-center mb-2 text-muted small">
+            {% for category in post.categories %}
+                <a href="{{ path('blog.category', { slug: category.slug }) }}" class="badge bg-secondary text-decoration-none me-2">
+                    {{ category.name }}
+                </a>
+            {% endfor %}
+            <span>{{ post.createdAt|date('d.m.Y') }}</span>
+        </div>
+
+        <h2 class="card-title h5">
+            <a href="{{ path('blog.post', { slug: post.slug }) }}" class="text-decoration-none text-dark">
+                {{ post.name }}
+            </a>
+        </h2>
+
+        <p class="card-text text-muted">
+            {{ post.excerpt|default(post.content|striptags|slice(0, 200)) }}
+        </p>
+
+        <a href="{{ path('blog.post', { slug: post.slug }) }}" class="btn btn-primary btn-sm">
+            Read more
+        </a>
+    </div>
+</article>

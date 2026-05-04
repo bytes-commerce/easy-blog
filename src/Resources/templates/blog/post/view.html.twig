@@ -1,0 +1,62 @@
+{% extends "@EasyBlog/blog/base.html.twig" %}
+
+{% block blog_title %}{{ post.name }}{% endblock %}
+{% block blog_description %}{{ post.seoDescription|default(post.content|striptags|slice(0, 160)) }}{% endblock %}
+
+{% block blog_content %}
+    <article>
+        <header class="mb-4">
+            <h1 class="mb-3">{{ post.name }}</h1>
+
+            <div class="d-flex flex-wrap align-items-center text-muted small mb-3">
+                {% for category in post.categories %}
+                    <a href="{{ path('blog.category', { slug: category.slug }) }}" class="badge bg-secondary text-decoration-none me-2">
+                        {{ category.name }}
+                    </a>
+                {% endfor %}
+                <span class="me-2">|</span>
+                <span>{{ post.createdAt|date('d.m.Y') }}</span>
+            </div>
+
+            {% for user in post.users %}
+                <div class="d-flex align-items-center mb-3">
+                    {% if user.image %}
+                        <img src="{{ asset(user.image) }}" alt="{{ user.name }}" class="rounded-circle me-2" width="40" height="40">
+                    {% endif %}
+                    <span class="fw-bold">{{ user.name }}</span>
+                </div>
+            {% endfor %}
+        </header>
+
+        {% if post.image %}
+            <figure class="mb-4">
+                <img src="{{ asset('uploads/' ~ post.image) }}" alt="{{ post.name }}" class="img-fluid rounded">
+                {% if post.credits %}
+                    <figcaption class="text-muted small mt-2">{{ post.credits|raw }}</figcaption>
+                {% endif %}
+            </figure>
+        {% endif %}
+
+        <div class="blog-content mb-5">
+            {{ post.content|raw }}
+        </div>
+
+        {% if post.faqs|length > 0 %}
+            <section class="mt-5">
+                <h2 class="h4 mb-3">Frequently Asked Questions</h2>
+                {% for faq in post.faqs %}
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <h3 class="h6 fw-bold">{{ faq.question }}</h3>
+                            <p class="mb-0 text-muted">{{ faq.answer|raw }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </section>
+        {% endif %}
+    </article>
+
+    <div class="mt-5 pt-3 border-top">
+        <a href="{{ path('blog.category.all-posts') }}" class="text-decoration-none">&larr; Back to all posts</a>
+    </div>
+{% endblock %}

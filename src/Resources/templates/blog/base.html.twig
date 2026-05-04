@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale|default('en') }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block blog_title %}Blog{% endblock %} - EasyBlog</title>
+    {% block meta_tags %}
+    <meta name="description" content="{% block blog_description %}Blog posts{% endblock %}">
+    {% endblock %}
+</head>
+<body>
+    <header class="bg-light py-3 mb-4">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="navbar-brand" href="{{ path('blog.category.all-posts') }}">Blog</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('blog.category.all-posts') }}">All Posts</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        {% block blog_content %}{% endblock %}
+    </main>
+
+    <footer class="bg-light py-3 mt-5">
+        <div class="container text-center">
+            <p class="text-muted mb-0">&copy; {{ "now"|date("Y") }} EasyBlog</p>
+        </div>
+    </footer>
+</body>
+</html>
