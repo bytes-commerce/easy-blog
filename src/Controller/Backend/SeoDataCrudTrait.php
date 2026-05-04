@@ -7,11 +7,15 @@ namespace BytesCommerce\EasyBlog\Controller\Backend;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Generator;
 use function Symfony\Component\Translation\t;
 
 trait SeoDataCrudTrait
 {
-    public function getSeoFields(): iterable
+    /**
+     * @return Generator<FormField|TextField|TextEditorField>
+     */
+    public function getSeoFields(): Generator
     {
         yield FormField::addFieldset(t('SEO'), 'fa fa-search');
         yield TextField::new('seoTitle')

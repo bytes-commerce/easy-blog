@@ -34,7 +34,7 @@ class Post implements TimeAwareInterface
     /**
      * @var Collection<int, AuthorAwareInterface>
      */
-    #[ORM\ManyToMany(targetEntity: 'AuthorAwareInterface', inversedBy: 'posts')]
+    #[ORM\ManyToMany(targetEntity: AuthorAwareInterface::class, inversedBy: 'posts')]
     private Collection $users;
 
     /**

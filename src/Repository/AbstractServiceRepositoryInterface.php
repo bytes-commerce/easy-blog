@@ -13,5 +13,8 @@ interface AbstractServiceRepositoryInterface extends ObjectRepository
 
     public function delete(object $entity): void;
 
-    public function count(array $criteria);
+    /**
+     * @param array<string, mixed> $criteria
+     */
+    public function count(array $criteria): int;
 }

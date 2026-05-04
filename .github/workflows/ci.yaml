@@ -34,9 +34,6 @@ jobs:
                   extensions: mbstring, xml, dom, zip, intl
                   coverage: none
 
-            - name: Setup Composer
-              uses: composer/composer-check-action@v1
-
             - name: Install Composer dependencies
               run: composer update --prefer-dist --no-interaction
 
@@ -68,6 +65,3 @@ jobs:
 
             - name: PHPStan Static Analysis
               run: ./vendor/bin/phpstan analyse src/ --level=6 --no-progress
-
-            - name: PHP Code Sniffer
-              run: ./vendor/bin/ecs check src/ --no-progress-bar

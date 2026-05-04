@@ -12,8 +12,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use DOMDocument;
 use DOMXPath;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Cache\CacheInterface;
@@ -27,7 +25,6 @@ class BlogController extends AbstractController
     public function __construct(
         private readonly PostRepositoryInterface $postRepository,
         private readonly CategoryRepositoryInterface $categoryRepository,
-        private readonly RequestStack $requestStack,
         private readonly CacheInterface $cache,
     ) {
     }
@@ -163,6 +160,9 @@ class BlogController extends AbstractController
         ]);
     }
 
+    /**
+     * @return array<int, Category>
+     */
     protected function getCategories(): array
     {
         return $this->cache->get('blog_categories', function (ItemInterface $item): array {
