@@ -39,8 +39,6 @@ jobs:
 
             - name: Install Composer dependencies
               run: composer update --prefer-dist --no-interaction
-              env:
-                  COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
 
             - name: Validate Composer JSON
               run: composer validate --strict --no-check-publish
