@@ -4,17 +4,13 @@ declare(strict_types=1);
 
 namespace BytesCommerce\EasyBlog\DependencyInjection;
 
-use BytesCommerce\EasyBlog\Entity\Category;
-use BytesCommerce\EasyBlog\Entity\Faq;
-use BytesCommerce\EasyBlog\Entity\Post;
 use BytesCommerce\EasyBlog\Repository\CategoryRepository;
 use BytesCommerce\EasyBlog\Repository\CategoryRepositoryInterface;
 use BytesCommerce\EasyBlog\Repository\FaqRepository;
 use BytesCommerce\EasyBlog\Repository\FaqRepositoryInterface;
 use BytesCommerce\EasyBlog\Repository\PostRepository;
 use BytesCommerce\EasyBlog\Repository\PostRepositoryInterface;
-use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineMappingPass;
-use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\RegisterXmlMappingsPass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -42,8 +38,8 @@ final class EasyBlogExtension extends Extension
         // Register repository interfaces with implementations
         $this->registerRepositories($container);
 
-        // Configure Doctrine entity mapping
-        $this->configureDoctrineMapping($container, $config);
+        // Configure Doctrine entity mapping from XML files
+        $this->configureXmlMapping($container);
     }
 
     private function registerRepositories(ContainerBuilder $container): void
@@ -58,21 +54,17 @@ final class EasyBlogExtension extends Extension
             ->setPublic(true);
     }
 
-    private function configureDoctrineMapping(ContainerBuilder $container, array $config): void
+    private function configureXmlMapping(ContainerBuilder $container): void
     {
-        // Build entity namespaces
-        $namespaces = [
-            Post::class,
-            Category::class,
-            Faq::class,
+        $xmlMappings = [
+            __DIR__ . '/../Resources/config/doctrine/Post.orm.xml',
+            __DIR__ . '/../Resources/config/doctrine/Category.orm.xml',
+            __DIR__ . '/../Resources/config/doctrine/Faq.orm.xml',
         ];
 
-        // Create a simple mapping pass that registers entity namespaces
-        $container->register('easy_blog.doctrine.mapping_pass', DoctrineMappingPass::class)
-            ->setArguments([
-                array_map(fn($entity) => [$entity], $namespaces),
-            ])
-            ->addTag('doctrine.container_dql_resolver');
+        $container->addCompilerPass(
+            RegisterXmlMappingsPass::withXmlMappings($xmlMappings)
+        );
     }
 
     public function getAlias(): string

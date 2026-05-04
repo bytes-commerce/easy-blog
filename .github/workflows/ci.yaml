@@ -1,0 +1,75 @@
+name: CI
+
+on:
+    push:
+        branches: [master, main]
+    pull_request:
+        branches: [master, main]
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    ci:
+        runs-on: ubuntu-latest
+
+        strategy:
+            fail-fast: false
+            matrix:
+                php: ['8.3', '8.4']
+                symfony: ['7.0', '8.0']
+
+        env:
+            SYMFONY_VERSION: ${{ matrix.symfony }}
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+                  extensions: mbstring, xml, dom, zip, intl
+                  coverage: none
+
+            - name: Setup Composer
+              uses: composer/composer-check-action@v1
+
+            - name: Install Composer dependencies
+              run: composer update --prefer-dist --no-interaction
+              env:
+                  COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+
+            - name: Validate Composer JSON
+              run: composer validate --strict --no-check-publish
+
+            - name: Check Coding Standards
+              run: composer run-script analyse
+
+            - name: Run PHPUnit Tests
+              run: composer run-script test
+
+    quality:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '8.4'
+                  extensions: mbstring, xml, dom, zip, intl
+                  coverage: none
+
+            - name: Install Composer dependencies
+              run: composer install --prefer-dist --no-interaction
+
+            - name: PHPStan Static Analysis
+              run: ./vendor/bin/phpstan analyse src/ --level=6 --no-progress
+
+            - name: PHP Code Sniffer
+              run: ./vendor/bin/ecs check src/ --no-progress-bar

@@ -1,6 +1,7 @@
 # EasyBlog
 
-A drop-in blog bundle for Symfony with EasyAdmin support. Provides a complete blog system with posts, categories, FAQs, and SEO features.
+A drop-in blog bundle for Symfony with EasyAdmin support. Provides a complete blog system with posts, categories, FAQs,
+and SEO features.
 
 ## Features
 
@@ -43,7 +44,7 @@ Create `config/packages/easy_blog.yaml`:
 
 ```yaml
 easy_blog:
-    user_entity: 'App\Entity\User'  # Your User entity class
+  user_entity: 'App\Entity\User'  # Your User entity class
 ```
 
 ### 4. Make your User entity implement AuthorAwareInterface
@@ -114,32 +115,32 @@ yield MenuItem::linkToCrud('Posts', 'fa fa-caret-right', Post::class);
 
 ```yaml
 easy_blog:
-    # Required: The host app's User entity that posts reference
-    user_entity: 'App\Entity\User'
+  # Required: The host app's User entity that posts reference
+  user_entity: 'App\Entity\User'
 
-    # Optional: Vich uploader settings for blog images
-    vich_uploader:
-        image_path: '/uploads/'
-        upload_dir: 'public/uploads/'
+  # Optional: Vich uploader settings for blog images
+  vich_uploader:
+    image_path: '/uploads/'
+    upload_dir: 'public/uploads/'
 
-    # Optional: Cache configuration
-    cache:
-        enabled: true
-        ttl: 7200  # seconds
+  # Optional: Cache configuration
+  cache:
+    enabled: true
+    ttl: 7200  # seconds
 
-    # Optional: Pagination settings
-    pagination:
-        page_size: 5
+  # Optional: Pagination settings
+  pagination:
+    page_size: 5
 ```
 
 ## Available Routes
 
-| Route | Description |
-|-------|-------------|
-| `blog.category.all-posts` | List all posts (`/beitraege/{page}`) |
-| `blog.category` | List posts by category (`/beitraege/{slug}/{page}`) |
-| `blog.post` | View single post (`/beitraege/beitrag/{slug}`) |
-| `blog.ajax.posts` | AJAX endpoint for post slider |
+| Route                     | Description                                         |
+|---------------------------|-----------------------------------------------------|
+| `blog.category.all-posts` | List all posts (`/beitraege/{page}`)                |
+| `blog.category`           | List posts by category (`/beitraege/{slug}/{page}`) |
+| `blog.post`               | View single post (`/beitraege/beitrag/{slug}`)      |
+| `blog.ajax.posts`         | AJAX endpoint for post slider                       |
 
 ## Template Customization
 
@@ -160,13 +161,27 @@ templates/
                 └── ...
 ```
 
-## Database Migrations
+## Database Schema
 
-After installation, generate and run migrations:
+The bundle provides Doctrine XML mapping files in `Resources/config/doctrine/`. These are automatically loaded when the
+bundle is registered.
+
+### Table Names
+
+All tables use the prefix `bytes_commerce_blog_`:
+
+| Entity          | Table                               |
+|-----------------|-------------------------------------|
+| Post            | `bytes_commerce_blog_post`           |
+| Category        | `bytes_commerce_blog_category`       |
+| Faq             | `bytes_commerce_blog_faq`           |
+| Post ↔ Category | `bytes_commerce_blog_post_category` |
+| Post ↔ User     | Your host app's user table          |
+
+Generate the schema using:
 
 ```bash
-php bin/console make:migration
-php bin/console doctrine:migrations:migrate
+php bin/console doctrine:schema:create
 ```
 
 ## Testing
