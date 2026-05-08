@@ -19,7 +19,7 @@
         "doctrine/orm": "^3.0",
         "doctrine/doctrine-bundle": "^2.11|^3.0",
         "doctrine/doctrine-migrations-bundle": "^3.3",
-        "easycorp/easyadmin-bundle": "^5.0",
+        "easycorp/easyadmin-bundle": "^4.0|^5.0",
         "vich/uploader-bundle": "^2.0",
         "symfony/twig-bundle": "^7.0|^8.0",
         "symfony/framework-bundle": "^7.0|^8.0",
