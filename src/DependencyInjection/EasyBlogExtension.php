@@ -29,11 +29,11 @@ final class EasyBlogExtension extends Extension
         );
         $loader->load('services.yaml');
 
-        // Store configuration as parameters
-        $container->setParameter('easy_blog.user.entity', $config['user_entity']);
-        $container->setParameter('easy_blog.vich_uploader', $config['vich_uploader']);
-        $container->setParameter('easy_blog.cache', $config['cache']);
-        $container->setParameter('easy_blog.pagination', $config['pagination']);
+        // Store configuration as parameters (guard against missing optional nodes)
+        $container->setParameter('easy_blog.user.entity', $config['user_entity'] ?? 'App\\Entity\\User');
+        $container->setParameter('easy_blog.vich_uploader', $config['vich_uploader'] ?? []);
+        $container->setParameter('easy_blog.cache', $config['cache'] ?? []);
+        $container->setParameter('easy_blog.pagination', $config['pagination'] ?? []);
 
         // Register repository interfaces with implementations
         $this->registerRepositories($container);
