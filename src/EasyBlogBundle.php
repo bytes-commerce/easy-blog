@@ -8,7 +8,7 @@ use BytesCommerce\EasyBlog\DependencyInjection\Compiler\AddEasyAdminControllersP
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-final class BytesCommerceEasyBlogBundle extends Bundle
+final class EasyBlogBundle extends Bundle
 {
     public function build(ContainerBuilder $container): void
     {
@@ -19,6 +19,8 @@ final class BytesCommerceEasyBlogBundle extends Bundle
 
     public function getPath(): string
     {
-        return \dirname(__DIR__);
+        // Return the directory of this class (src/) so that conventional paths like
+        // "Resources/..." resolve to src/Resources/... as expected by Doctrine/Symfony.
+        return __DIR__;
     }
 }
