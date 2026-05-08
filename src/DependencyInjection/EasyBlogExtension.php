@@ -10,7 +10,7 @@ use BytesCommerce\EasyBlog\Repository\FaqRepository;
 use BytesCommerce\EasyBlog\Repository\FaqRepositoryInterface;
 use BytesCommerce\EasyBlog\Repository\PostRepository;
 use BytesCommerce\EasyBlog\Repository\PostRepositoryInterface;
-use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\RegisterXmlMappingsPass;
+use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -56,14 +56,13 @@ final class EasyBlogExtension extends Extension
 
     private function configureXmlMapping(ContainerBuilder $container): void
     {
-        $xmlMappings = [
-            __DIR__ . '/../Resources/config/doctrine/Post.orm.xml',
-            __DIR__ . '/../Resources/config/doctrine/Category.orm.xml',
-            __DIR__ . '/../Resources/config/doctrine/Faq.orm.xml',
+        // Map all XML files in the doctrine directory to the bundle's Entity namespace
+        $mappings = [
+            __DIR__ . '/../Resources/config/doctrine' => 'BytesCommerce\\EasyBlog\\Entity',
         ];
 
         $container->addCompilerPass(
-            RegisterXmlMappingsPass::withXmlMappings($xmlMappings)
+            DoctrineOrmMappingsPass::createXmlMappingDriver($mappings, [], false)
         );
     }
 
