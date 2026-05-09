@@ -27,6 +27,7 @@
         <field name="excerpt" type="text" column="excerpt" nullable="true"/>
         <field name="credits" type="text" column="credits" nullable="true"/>
         <field name="access_counter" type="integer" column="access_counter" nullable="true"/>
+        <field name="status" type="string" column="status"/>
 
         <many-to-many field="categories" target-entity="BytesCommerce\EasyBlog\Entity\Category" inversed-by="posts">
             <join-table name="bytes_commerce_blog_post_category">
