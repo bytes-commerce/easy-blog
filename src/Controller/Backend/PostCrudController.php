@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace BytesCommerce\EasyBlog\Controller\Backend;
 
-use BytesCommerce\EasyBlog\Entity\AuthorAwareInterface;
 use BytesCommerce\EasyBlog\Entity\Post;
 use BytesCommerce\EasyBlog\Enum\BlogStateEnum;
 use Doctrine\ORM\EntityManagerInterface;

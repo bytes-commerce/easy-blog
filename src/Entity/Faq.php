@@ -9,6 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FaqRepository::class)]
+#[ORM\Table(name: 'bytes_commerce_blog_faq')]
 class Faq implements TimeAwareInterface
 {
     use TimeAwareTrait;
@@ -27,6 +28,12 @@ class Faq implements TimeAwareInterface
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $answer = null;
+
+    public function __construct()
+    {
+        $this->created_at = new \DateTimeImmutable();
+        $this->updated_at = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {

@@ -11,6 +11,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
+#[ORM\Table(name: 'bytes_commerce_blog_category')]
 class Category implements TimeAwareInterface
 {
     use TimeAwareTrait;
@@ -58,6 +59,8 @@ class Category implements TimeAwareInterface
     {
         $this->posts = new ArrayCollection();
         $this->children = new ArrayCollection();
+        $this->created_at = new \DateTimeImmutable();
+        $this->updated_at = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
