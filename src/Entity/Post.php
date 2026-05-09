@@ -11,7 +11,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: PostRepository::class, table: 'bytes_commerce_blog_post')]
+#[ORM\Entity(repositoryClass: PostRepository::class)]
+#[ORM\Table(name: 'bytes_commerce_blog_post')]
 class Post implements TimeAwareInterface
 {
     use TimeAwareTrait;

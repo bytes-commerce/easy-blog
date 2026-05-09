@@ -8,7 +8,8 @@ use BytesCommerce\EasyBlog\Repository\FaqRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: FaqRepository::class, table: 'bytes_commerce_blog_faq')]
+#[ORM\Entity(repositoryClass: FaqRepository::class)]
+#[ORM\Table(name: 'bytes_commerce_blog_faq')]
 class Faq implements TimeAwareInterface
 {
     use TimeAwareTrait;

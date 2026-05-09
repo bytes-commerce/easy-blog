@@ -10,7 +10,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CategoryRepository::class, table: 'bytes_commerce_blog_category')]
+#[ORM\Entity(repositoryClass: CategoryRepository::class)]
+#[ORM\Table(name: 'bytes_commerce_blog_category')]
 class Category implements TimeAwareInterface
 {
     use TimeAwareTrait;
