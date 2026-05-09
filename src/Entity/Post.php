@@ -55,7 +55,7 @@ class Post implements TimeAwareInterface
     #[ORM\OneToMany(targetEntity: Faq::class, mappedBy: 'post', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $faqs;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: 'integer')]
     private BlogStateEnum $status;
 
     public function __construct()

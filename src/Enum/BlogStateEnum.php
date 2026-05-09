@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace BytesCommerce\EasyBlog\Enum;
 
-enum BlogStateEnum: string
+enum BlogStateEnum: int
 {
-    case DRAFT = 'draft';
-    case PUBLISHED = 'published';
+    case DRAFT = 0;
+    case PUBLISHED = 1;
 }
