@@ -28,6 +28,12 @@ class Faq implements TimeAwareInterface
     #[ORM\Column(type: Types::TEXT)]
     private ?string $answer = null;
 
+    public function __construct()
+    {
+        $this->created_at = new \DateTimeImmutable();
+        $this->updated_at = new \DateTimeImmutable();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

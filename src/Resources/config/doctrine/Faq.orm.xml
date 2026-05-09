@@ -9,9 +9,9 @@
             <index name="idx_post_id" columns="post_id"/>
         </indexes>
 
-        <field name="id" type="integer" id="true">
+        <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
-        </field>
+        </id>
 
         <field name="created_at" type="datetime_immutable" column="created_at"/>
         <field name="updated_at" type="datetime_immutable" column="updated_at"/>

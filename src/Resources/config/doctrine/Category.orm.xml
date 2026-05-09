@@ -15,15 +15,12 @@
             <unique-constraint name="uniq_slug" columns="slug"/>
         </unique-constraints>
 
-        <field name="id" type="integer" id="true">
+        <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
-        </field>
+        </id>
 
         <field name="created_at" type="datetime_immutable" column="created_at"/>
         <field name="updated_at" type="datetime_immutable" column="updated_at"/>
-        <field name="seoTitle" type="string" column="seo_title" nullable="true"/>
-        <field name="seoDescription" type="string" column="seo_description" nullable="true"/>
-        <field name="seoKeywords" type="string" column="seo_keywords" nullable="true"/>
         <field name="name" type="text" column="name"/>
         <field name="slug" type="string" column="slug"/>
         <field name="description" type="text" column="description" nullable="true"/>

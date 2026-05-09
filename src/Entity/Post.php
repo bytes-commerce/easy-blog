@@ -32,12 +32,6 @@ class Post implements TimeAwareInterface
     private ?string $content = null;
 
     /**
-     * @var Collection<int, AuthorAwareInterface>
-     */
-    #[ORM\ManyToMany(targetEntity: AuthorAwareInterface::class, inversedBy: 'posts')]
-    private Collection $users;
-
-    /**
      * @var Collection<int, Category>
      */
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'posts')]
@@ -66,10 +60,11 @@ class Post implements TimeAwareInterface
 
     public function __construct()
     {
-        $this->users = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->faqs = new ArrayCollection();
         $this->status = BlogStateEnum::DRAFT;
+        $this->created_at = new \DateTimeImmutable();
+        $this->updated_at = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -109,30 +104,6 @@ class Post implements TimeAwareInterface
     public function setContent(string $content): static
     {
         $this->content = $content;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, AuthorAwareInterface>
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
-
-    public function addUser(AuthorAwareInterface $user): static
-    {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(AuthorAwareInterface $user): static
-    {
-        $this->users->removeElement($user);
 
         return $this;
     }

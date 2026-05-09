@@ -6,7 +6,6 @@
 
     <entity name="BytesCommerce\EasyBlog\Entity\Post" table="bytes_commerce_blog_post">
         <indexes>
-            <index name="idx_status" columns="status"/>
             <index name="idx_slug" columns="slug"/>
             <index name="idx_created_at" columns="created_at"/>
         </indexes>
@@ -15,15 +14,12 @@
             <unique-constraint name="uniq_slug" columns="slug"/>
         </unique-constraints>
 
-        <field name="id" type="integer" id="true">
+        <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
-        </field>
+        </id>
 
         <field name="created_at" type="datetime_immutable" column="created_at"/>
         <field name="updated_at" type="datetime_immutable" column="updated_at"/>
-        <field name="seoTitle" type="string" column="seo_title" nullable="true"/>
-        <field name="seoDescription" type="string" column="seo_description" nullable="true"/>
-        <field name="seoKeywords" type="string" column="seo_keywords" nullable="true"/>
         <field name="name" type="string" column="name"/>
         <field name="slug" type="string" column="slug"/>
         <field name="content" type="text" column="content"/>
@@ -31,18 +27,6 @@
         <field name="excerpt" type="text" column="excerpt" nullable="true"/>
         <field name="credits" type="text" column="credits" nullable="true"/>
         <field name="access_counter" type="integer" column="access_counter" nullable="true"/>
-        <field name="status" type="string" column="status" enum-type="BytesCommerce\EasyBlog\Enum\BlogStateEnum"/>
-
-        <many-to-many field="users" target-entity="App\Entity\User" inversed-by="posts">
-            <join-table name="bytes_commerce_blog_post_user">
-                <join-columns>
-                    <join-column name="post_id" referenced-column-name="id" on-delete="CASCADE"/>
-                </join-columns>
-                <inverse-join-columns>
-                    <join-column name="user_id" referenced-column-name="id" on-delete="CASCADE"/>
-                </inverse-join-columns>
-            </join-table>
-        </many-to-many>
 
         <many-to-many field="categories" target-entity="BytesCommerce\EasyBlog\Entity\Category" inversed-by="posts">
             <join-table name="bytes_commerce_blog_post_category">
@@ -55,7 +39,7 @@
             </join-table>
         </many-to-many>
 
-        <one-to-many field="faqs" target-entity="BytesCommerce\EasyBlog\Entity\Faq" mapped-by="post" cascade="persist,remove" orphan-removal="true"/>
+        <one-to-many field="faqs" target-entity="BytesCommerce\EasyBlog\Entity\Faq" mapped-by="post"/>
     </entity>
 
 </doctrine-mapping>

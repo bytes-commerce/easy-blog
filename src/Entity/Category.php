@@ -58,6 +58,8 @@ class Category implements TimeAwareInterface
     {
         $this->posts = new ArrayCollection();
         $this->children = new ArrayCollection();
+        $this->created_at = new \DateTimeImmutable();
+        $this->updated_at = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
