@@ -1,0 +1,73 @@
+blog:
+    category:
+        entity:
+            singular: Kategorie
+            plural: Kategorien
+    post:
+        entity:
+            singular: Beitrag
+            plural: Beiträge
+    faq:
+        entity:
+            singular: FAQ
+            plural: FAQs
+
+    fieldset:
+        information: Informationen
+        content: Inhalt
+        relation: Verknüpfungen
+        seo: SEO
+        image: Bild
+        faq: FAQ
+
+    field:
+        name: Name
+        slug: URL-Segment
+        sort_order: Sortierung
+        description: Beschreibung
+        bottom_description: Untere Beschreibung
+        parent: Übergeordnete Kategorie
+        children: Unterkategorien
+        access_counter: Aufrufe
+        status: Status
+        content: Inhalt
+        image: Titelbild
+        credits: Bildnachweis
+        categories: Kategorien
+        faqs: FAQs
+        question: Frage
+        answer: Antwort
+        seo_title: SEO-Titel
+        seo_keywords: SEO-Keywords
+        seo_description: SEO-Beschreibung
+
+    help:
+        name: "Anzeigename der Kategorie."
+        slug: "URL-freundlicher Bezeichner, z. B. 'meine-kategorie'."
+        sort_order: "Bestimmt die Reihenfolge bei der Darstellung. Niedrigere Werte erscheinen zuerst."
+        description: "Haupttext der Kategorie, wird auf der Kategorieseite angezeigt."
+        bottom_description: "Zusätzlicher Text, der am Ende der Kategorieseite eingeblendet wird."
+        parent: "Optional: Wähle eine übergeordnete Kategorie aus."
+        children: "Optional: Unterkategorien, die dieser Kategorie zugeordnet sind."
+        access_counter: "Wie oft diese Kategorie aufgerufen wurde."
+        status: "Entwurf = noch nicht öffentlich sichtbar. Veröffentlicht = für Besucher sichtbar."
+        content: "Der eigentliche Blog-Inhalt."
+        image: "Titelbild des Beitrags."
+        credits: "HTML-Code für den Bildnachweis, z. B. von Unsplash. In Deutschland rechtlich empfohlen."
+        categories: "Ordne den Beitrag einer oder mehreren Kategorien zu."
+        faqs: "Häufig gestellte Fragen, die direkt zum Beitrag gehören."
+        question: "Die Frage, die im FAQ-Bereich angezeigt wird."
+        answer: "Die passende Antwort zur Frage."
+        seo_title: "Titel für Suchmaschinen. Maximal 120 Zeichen. Bleibt leer, wird der Name verwendet."
+        seo_keywords: "Kommaseparierte Keywords für Suchmaschinen. Maximal 170 Zeichen."
+        seo_description: "Kurze Zusammenfassung für Suchmaschinen und Vorschautexte. Maximal 500 Zeichen."
+
+    status:
+        draft: Entwurf
+        published: Veröffentlicht
+
+    error:
+        slug_leading_slash: 'Der Slug darf nicht mit "/" beginnen.'
+
+    action:
+        view_post: Beitrag ansehen
