@@ -69,5 +69,8 @@ blog:
     error:
         slug_leading_slash: 'Der Slug darf nicht mit "/" beginnen.'
 
+    counter:
+        remaining: "Noch %remaining% Zeichen"
+
     action:
         view_post: Beitrag ansehen

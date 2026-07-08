@@ -77,14 +77,17 @@ class CategoryCrudController extends AbstractCrudController
         yield FormField::addFieldset(self::trans('blog.fieldset.relation'), 'fa fa-info');
         yield AssociationField::new('parent', self::trans('blog.field.parent'))
             ->setColumns('col-sm-12 col-md-6')
-            ->setRequired(false);
+            ->setRequired(false)
+            ->setHelp(self::trans('blog.help.parent'));
 
         yield AssociationField::new('children', self::trans('blog.field.children'))
             ->setColumns('col-sm-12 col-md-6')
-            ->setRequired(false);
+            ->setRequired(false)
+            ->setHelp(self::trans('blog.help.children'));
 
         yield NumberField::new('access_counter', self::trans('blog.field.access_counter'))
             ->setDisabled()
-            ->setColumns('col-sm-12 col-md-6');
+            ->setColumns('col-sm-12 col-md-6')
+            ->setHelp(self::trans('blog.help.access_counter'));
     }
 }

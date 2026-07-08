@@ -88,7 +88,8 @@ class PostCrudController extends AbstractCrudController
 
         yield NumberField::new('access_counter', self::trans('blog.field.access_counter'))
             ->setDisabled()
-            ->setColumns('col-sm-12 col-md-2');
+            ->setColumns('col-sm-12 col-md-2')
+            ->setHelp(self::trans('blog.help.access_counter'));
 
         yield FormField::addFieldset(self::trans('blog.fieldset.content'), 'fa fa-pencil');
         yield TextEditorField::new('content', self::trans('blog.field.content'))
@@ -115,7 +116,8 @@ class PostCrudController extends AbstractCrudController
         yield AssociationField::new('categories', self::trans('blog.field.categories'))
             ->setColumns('col-sm-12')
             ->hideOnIndex()
-            ->setRequired(false);
+            ->setRequired(false)
+            ->setHelp(self::trans('blog.help.categories'));
 
         yield FormField::addFieldset(self::trans('blog.fieldset.faq'), 'fa fa-questionmark');
         yield CollectionField::new('faqs', self::trans('blog.field.faqs'))

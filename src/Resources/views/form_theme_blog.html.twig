@@ -34,9 +34,11 @@
                 function checkSlug() {
                     if (input.value.startsWith('/')) {
                         input.classList.add('is-invalid');
+                        input.setAttribute('aria-invalid', 'true');
                         feedback.style.display = 'block';
                     } else {
                         input.classList.remove('is-invalid');
+                        input.setAttribute('aria-invalid', 'false');
                         feedback.style.display = 'none';
                     }
                 }
@@ -44,6 +46,28 @@
                 input.addEventListener('input', checkSlug);
                 input.addEventListener('change', checkSlug);
                 checkSlug();
+            });
+
+            var counterTemplate = "{{ 'blog.counter.remaining'|trans({'%remaining%': '__R__'}, 'EasyBlogBundle')|e('js') }}";
+            document.querySelectorAll('input[maxlength]:not([type="hidden"]), textarea[maxlength]').forEach(function (input) {
+                if (input.dataset.maxlengthCounter === 'false') {
+                    return;
+                }
+                var max = parseInt(input.getAttribute('maxlength'), 10);
+                if (!max || max <= 0) {
+                    return;
+                }
+
+                var counter = document.createElement('div');
+                counter.className = 'form-text text-muted small char-counter';
+                input.parentNode.appendChild(counter);
+
+                function updateCounter() {
+                    counter.textContent = counterTemplate.replace('__R__', Math.max(0, max - input.value.length));
+                }
+
+                input.addEventListener('input', updateCounter);
+                updateCounter();
             });
         });
     </script>
