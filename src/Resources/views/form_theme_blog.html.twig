@@ -25,21 +25,38 @@
         document.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('[data-validate-slug]').forEach(function (input) {
                 var message = input.dataset.validateSlugMessage || 'Der Slug darf nicht mit "/" beginnen.';
-                var feedback = document.createElement('div');
-                feedback.className = 'invalid-feedback d-block';
-                feedback.textContent = message;
-                feedback.style.display = 'none';
-                input.parentNode.appendChild(feedback);
+                var tooltip = null;
+
+                if (typeof bootstrap !== 'undefined' && bootstrap.Tooltip) {
+                    tooltip = new bootstrap.Tooltip(input, {
+                        title: message,
+                        placement: 'right',
+                        trigger: 'hover focus',
+                        customClass: 'slug-invalid-tooltip'
+                    });
+                    tooltip.disable();
+                } else {
+                    // Fallback for environments without Bootstrap JS.
+                    input.setAttribute('title', '');
+                }
 
                 function checkSlug() {
                     if (input.value.startsWith('/')) {
                         input.classList.add('is-invalid');
                         input.setAttribute('aria-invalid', 'true');
-                        feedback.style.display = 'block';
+                        if (tooltip) {
+                            tooltip.enable();
+                        } else {
+                            input.setAttribute('title', message);
+                        }
                     } else {
                         input.classList.remove('is-invalid');
                         input.setAttribute('aria-invalid', 'false');
-                        feedback.style.display = 'none';
+                        if (tooltip) {
+                            tooltip.disable();
+                        } else {
+                            input.setAttribute('title', '');
+                        }
                     }
                 }
 
@@ -83,6 +100,15 @@
         .char-counter {
             margin-top: 0.25rem;
             font-size: 0.75rem;
+        }
+
+        /* Make the slug validation tooltip visually match the error state. */
+        .slug-invalid-tooltip .tooltip-inner {
+            background-color: var(--bs-danger, #dc3545);
+        }
+        .slug-invalid-tooltip.bs-tooltip-end .tooltip-arrow::before,
+        .slug-invalid-tooltip.bs-tooltip-right .tooltip-arrow::before {
+            border-right-color: var(--bs-danger, #dc3545);
         }
     </style>
 {% endblock form_start %}
