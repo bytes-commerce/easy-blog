@@ -8,7 +8,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Generator;
-use function Symfony\Component\Translation\t;
 
 trait SeoDataCrudTrait
 {
@@ -17,18 +16,21 @@ trait SeoDataCrudTrait
      */
     public function getSeoFields(): Generator
     {
-        yield FormField::addFieldset(t('SEO'), 'fa fa-search');
-        yield TextField::new('seoTitle')
+        yield FormField::addFieldset(self::trans('blog.fieldset.seo'), 'fa fa-search');
+        yield TextField::new('seoTitle', self::trans('blog.field.seo_title'))
             ->setColumns('col-sm-12 col-md-6')
             ->hideOnIndex()
-            ->setHelp(t('SEO Title'));
-        yield TextField::new('seoKeywords')
+            ->setFormTypeOption('attr.maxlength', 120)
+            ->setHelp(self::trans('blog.help.seo_title'));
+        yield TextField::new('seoKeywords', self::trans('blog.field.seo_keywords'))
             ->setColumns('col-sm-12 col-md-6')
             ->hideOnIndex()
-            ->setHelp(t('SEO Keywords'));
-        yield TextEditorField::new('seoDescription')
+            ->setFormTypeOption('attr.maxlength', 170)
+            ->setHelp(self::trans('blog.help.seo_keywords'));
+        yield TextEditorField::new('seoDescription', self::trans('blog.field.seo_description'))
             ->setColumns('col-sm-12')
             ->hideOnIndex()
-            ->setHelp(t('SEO Description'));
+            ->setFormTypeOption('attr.maxlength', 500)
+            ->setHelp(self::trans('blog.help.seo_description'));
     }
 }

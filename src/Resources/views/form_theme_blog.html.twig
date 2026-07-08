@@ -1,0 +1,174 @@
+{# @var ea \EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext #}
+{% extends '@!EasyAdmin/crud/form_theme.html.twig' %}
+
+{% block form_start %}
+    {% if form.vars.errors|length > 0 and 'ea_crud' in form.vars.block_prefixes|default([]) %}
+        <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1080;">
+            {% for error in form.vars.errors %}
+                <div class="toast show align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+                    <div class="d-flex">
+                        <div class="toast-body">{{ error.message }}</div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {{ parent() }}
+
+    {% if ea().request.query.get('referrer') %}
+        <input type="hidden" name="referrer" value="{{ ea().request.query.get('referrer') }}">
+    {% endif %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('[data-validate-slug]').forEach(function (input) {
+                var message = input.dataset.validateSlugMessage || 'Der Slug darf nicht mit "/" beginnen.';
+                var tooltip = null;
+
+                if (typeof bootstrap !== 'undefined' && bootstrap.Tooltip) {
+                    tooltip = new bootstrap.Tooltip(input, {
+                        title: message,
+                        placement: 'right',
+                        trigger: 'hover focus',
+                        customClass: 'slug-invalid-tooltip'
+                    });
+                    tooltip.disable();
+                } else {
+                    // Fallback for environments without Bootstrap JS.
+                    input.setAttribute('title', '');
+                }
+
+                function checkSlug() {
+                    if (input.value.startsWith('/')) {
+                        input.classList.add('is-invalid');
+                        input.setAttribute('aria-invalid', 'true');
+                        if (tooltip) {
+                            tooltip.enable();
+                        } else {
+                            input.setAttribute('title', message);
+                        }
+                    } else {
+                        input.classList.remove('is-invalid');
+                        input.setAttribute('aria-invalid', 'false');
+                        if (tooltip) {
+                            tooltip.disable();
+                        } else {
+                            input.setAttribute('title', '');
+                        }
+                    }
+                }
+
+                input.addEventListener('input', checkSlug);
+                input.addEventListener('change', checkSlug);
+                checkSlug();
+            });
+
+            var counterTemplate = "{{ 'blog.counter.remaining'|trans({'%remaining%': '__R__'}, 'EasyBlogBundle')|e('js') }}";
+            document.querySelectorAll('input[maxlength]:not([type="hidden"]), textarea[maxlength]').forEach(function (input) {
+                if (input.dataset.maxlengthCounter === 'false') {
+                    return;
+                }
+                var max = parseInt(input.getAttribute('maxlength'), 10);
+                if (!max || max <= 0) {
+                    return;
+                }
+
+                var counter = document.createElement('div');
+                counter.className = 'form-text text-muted small char-counter';
+                input.parentNode.appendChild(counter);
+
+                function updateCounter() {
+                    counter.textContent = counterTemplate.replace('__R__', Math.max(0, max - input.value.length));
+                }
+
+                input.addEventListener('input', updateCounter);
+                updateCounter();
+            });
+        });
+    </script>
+
+    <style>
+        /* Remove the decorative chevron that EasyAdmin renders next to fieldset labels. */
+        .form-fieldset-collapse-marker,
+        .form-collection-item-collapse-marker {
+            display: none !important;
+        }
+
+        /* Character counter shown under inputs with a maxlength attribute. */
+        .char-counter {
+            margin-top: 0.25rem;
+            font-size: 0.75rem;
+        }
+
+        /* Make the slug validation tooltip visually match the error state. */
+        .slug-invalid-tooltip .tooltip-inner {
+            background-color: var(--bs-danger, #dc3545);
+        }
+        .slug-invalid-tooltip.bs-tooltip-end .tooltip-arrow::before,
+        .slug-invalid-tooltip.bs-tooltip-right .tooltip-arrow::before {
+            border-right-color: var(--bs-danger, #dc3545);
+        }
+    </style>
+{% endblock form_start %}
+
+{% block form_row %}
+    {% set row_attr = row_attr|merge({
+        class: row_attr.class|default('') ~ ' form-group',
+    }) %}
+    {% set field = form.vars.ea_vars.field|default(null) %}
+
+    {% set help_text = field.help ?? form.vars.help ?? null %}
+    {% set has_help = help_text is not empty %}
+
+    {% if has_help %}
+        {% set label_attr = form.vars.label_attr|default({})|merge({
+            'data-bs-toggle': 'tooltip',
+            'data-bs-placement': 'right',
+            'title': help_text|trans(label_translation_parameters|default({}), translation_domain|default('EasyBlogBundle')),
+        }) %}
+    {% else %}
+        {% set label_attr = form.vars.label_attr|default({}) %}
+    {% endif %}
+
+    <div class="{{ field.columns ?? field.defaultColumns ?? '' }}">
+        {%- set row_class = row_class|default(row_attr.class|default('mb-3')) -%}
+        <div {% with {attr: row_attr|merge({class: (row_class ~ ((not compound or force_error|default(false)) and not valid ? ' has-error'))|trim})} %}{{ block('attributes') }}{% endwith %}>
+            {{- form_label(form, null, {'label_attr': label_attr}) -}}
+            {% if has_help %}
+                <i class="fa fa-question-circle text-muted ms-1"
+                   data-bs-toggle="tooltip"
+                   data-bs-placement="right"
+                   title="{{ help_text|trans(label_translation_parameters|default({}), translation_domain|default('EasyBlogBundle')) }}"
+                   aria-hidden="true"></i>
+            {% endif %}
+            <div class="form-widget">
+                {% set has_prepend_html = field.prepend_html|default(null) is not null %}
+                {% set has_append_html = field.append_html|default(null) is not null %}
+                {% set has_input_groups = has_prepend_html or has_append_html %}
+
+                {% if has_input_groups %}<div class="input-group">{% endif %}
+                    {% if has_prepend_html %}
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">{{ field.prepend_html|raw }}</span>
+                        </div>
+                    {% endif %}
+
+                    {{ form_widget(form) }}
+
+                    {% if has_append_html %}
+                        <span class="input-group-text">{{ field.append_html|raw }}</span>
+                    {% endif %}
+                {% if has_input_groups %}</div>{% endif %}
+
+                {# Default help text is rendered as a tooltip on the label; do not repeat it here. #}
+                {{- form_errors(form) -}}
+            </div>
+        </div>
+    </div>
+
+    {% if field.columns|default(null) is null %}
+        <div class="flex-fill"></div>
+    {% endif %}
+{% endblock form_row %}

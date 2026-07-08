@@ -1,0 +1,76 @@
+blog:
+    category:
+        entity:
+            singular: Category
+            plural: Categories
+    post:
+        entity:
+            singular: Post
+            plural: Posts
+    faq:
+        entity:
+            singular: FAQ
+            plural: FAQs
+
+    fieldset:
+        information: Information
+        content: Content
+        relation: Relations
+        seo: SEO
+        image: Image
+        faq: FAQ
+
+    field:
+        name: Name
+        slug: Slug
+        sort_order: Sort order
+        description: Description
+        bottom_description: Bottom description
+        parent: Parent category
+        children: Subcategories
+        access_counter: Views
+        status: Status
+        content: Content
+        image: Featured image
+        credits: Image credits
+        categories: Categories
+        faqs: FAQs
+        question: Question
+        answer: Answer
+        seo_title: SEO title
+        seo_keywords: SEO keywords
+        seo_description: SEO description
+
+    help:
+        name: "Display name of the category."
+        slug: "URL-friendly identifier, e.g. 'my-category'."
+        sort_order: "Defines the display order. Lower values appear first."
+        description: "Main text of the category, shown on the category page."
+        bottom_description: "Additional text displayed at the bottom of the category page."
+        parent: "Optional: select a parent category."
+        children: "Optional: subcategories assigned to this category."
+        access_counter: "How often this category has been viewed."
+        status: "Draft = not publicly visible. Published = visible to visitors."
+        content: "The actual blog post content."
+        image: "Featured image of the post."
+        credits: "HTML code for image attribution, e.g. from Unsplash. Recommended for legal compliance in Germany."
+        categories: "Assign the post to one or more categories."
+        faqs: "Frequently asked questions related to this post."
+        question: "The question displayed in the FAQ section."
+        answer: "The answer to the question."
+        seo_title: "Title for search engines. Maximum 120 characters. If empty, the name will be used."
+        seo_keywords: "Comma-separated keywords for search engines. Maximum 170 characters."
+        seo_description: "Short summary for search engines and previews. Maximum 500 characters."
+
+    status:
+        draft: Draft
+        published: Published
+
+    error:
+        slug_leading_slash: 'The slug must not start with "/".'
+
+    counter:
+        remaining: "%remaining% characters left"
+
+    action:
+        view_post: View post
