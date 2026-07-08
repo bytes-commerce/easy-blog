@@ -71,6 +71,20 @@
             });
         });
     </script>
+
+    <style>
+        /* Remove the decorative chevron that EasyAdmin renders next to fieldset labels. */
+        .form-fieldset-collapse-marker,
+        .form-collection-item-collapse-marker {
+            display: none !important;
+        }
+
+        /* Character counter shown under inputs with a maxlength attribute. */
+        .char-counter {
+            margin-top: 0.25rem;
+            font-size: 0.75rem;
+        }
+    </style>
 {% endblock form_start %}
 
 {% block form_row %}
