@@ -4,40 +4,26 @@ services:
         autoconfigure: true
         public: false
 
-    # Repository registrations with explicit doctrine registry
-    BytesCommerce\EasyBlog\Repository\PostRepository:
-        arguments:
-            $registry: '@doctrine'
+    BytesCommerce\EasyBlog\:
+        resource: '../'
+        exclude:
+            - '../DependencyInjection/'
+            - '../Entity/'
+            - '../Enum/'
+            - '../EasyBlogBundle.php'
 
-    BytesCommerce\EasyBlog\Repository\CategoryRepository:
-        arguments:
-            $registry: '@doctrine'
+    _instanceof:
+        BytesCommerce\EasyBlog\Controller\Backend\AbstractCrudController:
+            tags: ['easyadmin.controller']
 
-    BytesCommerce\EasyBlog\Repository\FaqRepository:
-        arguments:
-            $registry: '@doctrine'
+    BytesCommerce\EasyBlog\Repository\PostRepositoryInterface:
+        alias: 'BytesCommerce\EasyBlog\Repository\PostRepository'
+        public: true
 
-    # Repository interfaces as direct service references
-    BytesCommerce\EasyBlog\Repository\PostRepositoryInterface: '@BytesCommerce\EasyBlog\Repository\PostRepository'
+    BytesCommerce\EasyBlog\Repository\CategoryRepositoryInterface:
+        alias: 'BytesCommerce\EasyBlog\Repository\CategoryRepository'
+        public: true
 
-    BytesCommerce\EasyBlog\Repository\CategoryRepositoryInterface: '@BytesCommerce\EasyBlog\Repository\CategoryRepository'
-
-    BytesCommerce\EasyBlog\Repository\FaqRepositoryInterface: '@BytesCommerce\EasyBlog\Repository\FaqRepository'
-
-    # Controller registration with EasyAdmin
-    BytesCommerce\EasyBlog\Controller\Backend\PostCrudController:
-        tags: ['easyadmin.controller']
-
-    BytesCommerce\EasyBlog\Controller\Backend\CategoryCrudController:
-        tags: ['easyadmin.controller']
-
-    BytesCommerce\EasyBlog\Controller\Backend\FaqCrudController:
-        tags: ['easyadmin.controller']
-
-    # Blog frontend controller
-    BytesCommerce\EasyBlog\Controller\BlogController:
-        arguments:
-            $postRepository: '@BytesCommerce\EasyBlog\Repository\PostRepositoryInterface'
-            $categoryRepository: '@BytesCommerce\EasyBlog\Repository\CategoryRepositoryInterface'
-            $cache: '@cache.app'
-        tags: ['controller.service_arguments']
+    BytesCommerce\EasyBlog\Repository\FaqRepositoryInterface:
+        alias: 'BytesCommerce\EasyBlog\Repository\FaqRepository'
+        public: true

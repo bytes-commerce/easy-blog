@@ -8,10 +8,9 @@ use BytesCommerce\EasyBlog\Entity\Category;
 use BytesCommerce\EasyBlog\Entity\Post;
 use BytesCommerce\EasyBlog\Enum\BlogStateEnum;
 use BytesCommerce\EasyBlog\Repository\PostRepository;
+use Doctrine\DBAL\Driver\PDO\SQLite\Driver;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMSetup;
-use Doctrine\DBAL\SQLiteAdapter;
-use Doctrine\DBAL\Driver\PDOSqlite\Driver;
 use PHPUnit\Framework\TestCase;
 
 final class PostRepositoryTest extends TestCase
@@ -33,7 +32,7 @@ final class PostRepositoryTest extends TestCase
         );
 
         $this->entityManager = new EntityManager($connection, $config);
-        $this->repository = new PostRepository($this->entityManager->getMetadataFactory());
+        $this->repository = new PostRepository($this->entityManager);
 
         // Create schema
         $this->createSchema();

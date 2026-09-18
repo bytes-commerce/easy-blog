@@ -120,6 +120,9 @@ class BlogController extends AbstractController
         return trim(preg_replace('/[^a-z0-9]/', '-', strtolower($string)), '-');
     }
 
+    /**
+     * @return ArrayCollection<string, mixed>
+     */
     private function createHeadingIndexAndModifyHTML(string $html): ArrayCollection
     {
         $dom = new DOMDocument();

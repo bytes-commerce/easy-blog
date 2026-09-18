@@ -24,6 +24,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * @extends AbstractCrudController<Post>
+ */
 class PostCrudController extends AbstractCrudController
 {
     use SeoDataCrudTrait;
