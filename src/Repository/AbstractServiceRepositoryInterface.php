@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectRepository;
 
 /**
- * @template T of object
+ * @template T
  *
  * @extends ObjectRepository<T>
  */

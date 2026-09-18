@@ -14,6 +14,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * @extends AbstractCrudController<Category>
+ */
 class CategoryCrudController extends AbstractCrudController
 {
     use SeoDataCrudTrait;
