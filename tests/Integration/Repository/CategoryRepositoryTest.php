@@ -6,9 +6,9 @@ namespace BytesCommerce\EasyBlog\Tests\Integration\Repository;
 
 use BytesCommerce\EasyBlog\Entity\Category;
 use BytesCommerce\EasyBlog\Repository\CategoryRepository;
+use Doctrine\DBAL\Driver\PDO\SQLite\Driver;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMSetup;
-use Doctrine\DBAL\Driver\PDOSqlite\Driver;
 use PHPUnit\Framework\TestCase;
 
 final class CategoryRepositoryTest extends TestCase
@@ -29,7 +29,7 @@ final class CategoryRepositoryTest extends TestCase
         );
 
         $this->entityManager = new EntityManager($connection, $config);
-        $this->repository = new CategoryRepository($this->entityManager->getMetadataFactory());
+        $this->repository = new CategoryRepository($this->entityManager);
 
         $this->createSchema();
     }

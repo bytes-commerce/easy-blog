@@ -24,15 +24,6 @@
         </testsuite>
     </testsuites>
 
-    <coverage>
-        <include>
-            <directory suffix=".php">src</directory>
-        </include>
-        <exclude>
-            <directory>src/DependencyInjection</directory>
-        </exclude>
-    </coverage>
-
     <source>
         <include>
             <directory suffix=".php">src</directory>

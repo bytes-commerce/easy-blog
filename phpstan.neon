@@ -10,3 +10,4 @@ parameters:
         - '#Parameter \#1 \$entity of method BytesCommerce\\EasyBlog\\Repository\\AbstractServiceRepository::add\(\) expects object, mixed given#'
         - '#Class Doctrine\\(ORM|Bundle\\DoctrineBundle)\\Repository\\(Lazy)?ServiceEntityRepository specifies template type T of interface Doctrine\\Persistence\\ObjectRepository as T of object but it.s already specified as object\.#'
         - '#Class Doctrine\\ORM\\EntityRepository specifies template type T of interface Doctrine\\Persistence\\ObjectRepository as T of object but it.s already specified as object\.#'
+        - '#Class BytesCommerce\\EasyBlog\\Repository\\AbstractServiceRepository(?:Interface)? specifies template type T of interface .* as object but it.s already specified as .*\.#'
