@@ -11,6 +11,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * @extends AbstractServiceRepository<Post>
+ */
 final class PostRepository extends AbstractServiceRepository implements PostRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)

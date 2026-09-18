@@ -9,8 +9,18 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController as BaseAbs
 use Symfony\Component\Translation\TranslatableMessage;
 use function Symfony\Component\Translation\t;
 
+/**
+ * @template TEntity of object
+ *
+ * @extends BaseAbstractCrudController<TEntity>
+ *
+ * @implements CrudControllerInterface<TEntity>
+ */
 abstract class AbstractCrudController extends BaseAbstractCrudController implements CrudControllerInterface
 {
+    /**
+     * @param array<string, mixed> $parameters
+     */
     protected static function trans(string $message, array $parameters = []): TranslatableMessage
     {
         return t($message, $parameters, 'EasyBlogBundle');

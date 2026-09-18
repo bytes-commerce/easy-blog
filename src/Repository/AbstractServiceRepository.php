@@ -11,6 +11,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Webmozart\Assert\Assert;
 
+/**
+ * @template T of object
+ *
+ * @extends ServiceEntityRepository<T>
+ */
 abstract class AbstractServiceRepository extends ServiceEntityRepository implements AbstractServiceRepositoryInterface
 {
     public function __construct(
