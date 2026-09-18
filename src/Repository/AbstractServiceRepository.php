@@ -12,7 +12,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Webmozart\Assert\Assert;
 
 /**
- * @template T
+ * @template T of object
  *
  * @extends ServiceEntityRepository<T>
  *
